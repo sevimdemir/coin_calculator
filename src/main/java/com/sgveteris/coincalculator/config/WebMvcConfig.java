@@ -9,7 +9,6 @@ import org.springframework.web.servlet.config.annotation.*;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
-
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();

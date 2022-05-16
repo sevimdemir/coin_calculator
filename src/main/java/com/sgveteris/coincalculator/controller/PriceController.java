@@ -8,6 +8,7 @@ import com.sgveteris.coincalculator.service.IPriceService;
 import com.sgveteris.coincalculator.util.JsonResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +22,10 @@ import java.math.BigDecimal;
 @RequestMapping("/api/v1/price")
 @Api(value = "price api for coin calculation")
 @Validated
+@RequiredArgsConstructor
 public class PriceController {
 
-    @Autowired
-    private IPriceService priceService;
+    private final IPriceService priceService;
 
     @GetMapping("/calculate")
     @ApiOperation(value = "coin calculator operation")
@@ -32,13 +33,11 @@ public class PriceController {
         CalculationResult calculationResult = priceService.getPrice(priceForm.getCurrency().toUpperCase(),
                 priceForm.getAmount(),
                 priceForm.getCoinType().toUpperCase());
-        return new ResponseEntity<JsonResponse>(JsonResponse.success(calculationResult), HttpStatus.OK);
+        return new ResponseEntity<>(JsonResponse.success(calculationResult), HttpStatus.OK);
     }
 
     @ExceptionHandler({TickerNotFoundException.class, TickerInvalidException.class})
     public ResponseEntity<JsonResponse>  handleException(Exception exception){
-        System.out.println("handle " + exception.getMessage());
-        return new ResponseEntity<JsonResponse>(JsonResponse.failure(exception.getMessage()), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(JsonResponse.failure(exception.getMessage()), HttpStatus.NOT_FOUND);
     }
-
 }

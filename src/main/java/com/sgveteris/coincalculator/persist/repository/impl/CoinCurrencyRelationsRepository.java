@@ -7,21 +7,18 @@ import com.sgveteris.coincalculator.persist.entity.CoinCurrencyRelationEntity;
 import com.sgveteris.coincalculator.persist.entity.CoinEntity;
 import com.sgveteris.coincalculator.persist.entity.CurrencyEntity;
 import com.sgveteris.coincalculator.persist.repository.ICoinCurrencyRelationsRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class CoinCurrencyRelationsRepository implements ICoinCurrencyRelationsRepository {
-
-    @Autowired
-    private ICoinCurrencyRelationsDao coinCurrencyRelationsDao;
-
-    @Autowired
-    private ICurrencyDao currencyDao;
-    @Autowired
-    private ICoinDao coinDao;
+    private final ICoinCurrencyRelationsDao coinCurrencyRelationsDao;
+    private final ICurrencyDao currencyDao;
+    private final ICoinDao coinDao;
 
     @Override
     public Boolean isTickerValid(String currency, String coinType) {

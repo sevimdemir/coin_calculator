@@ -36,7 +36,7 @@ class CoinServiceTest {
     @Test
     void getCoins() {
 
-        List<CoinDto> coinList = new ArrayList<CoinDto>();
+        List<CoinDto> coinList = new ArrayList<>();
         coinList.add(new CoinDto(1L, "BTC"));
         when(coinRepositoryMock.findAll()).thenReturn(coinList);
         //

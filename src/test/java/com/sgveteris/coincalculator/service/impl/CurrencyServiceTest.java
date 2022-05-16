@@ -2,13 +2,10 @@ package com.sgveteris.coincalculator.service.impl;
 
 import com.sgveteris.coincalculator.dto.CurrencyDto;
 import com.sgveteris.coincalculator.persist.repository.ICurrencyRepository;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -26,18 +23,9 @@ public class CurrencyServiceTest {
     @Mock
     ICurrencyRepository currencyRepositoryMock;
 
-    @Before
-    void setUp() {
-        MockitoAnnotations.initMocks(this);
-    }
-
-    @After
-    void tearDown() {
-    }
-
     @Test
     public void getCurrencies() {
-        List<CurrencyDto> currencyList = new ArrayList<CurrencyDto>();
+        List<CurrencyDto> currencyList = new ArrayList<>();
         currencyList.add(new CurrencyDto(1L, "USD"));
         when(currencyRepositoryMock.findAll()).thenReturn(currencyList);
         //

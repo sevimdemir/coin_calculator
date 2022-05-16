@@ -8,9 +8,11 @@ import com.sgveteris.coincalculator.exception.TickerNotFoundException;
 import com.sgveteris.coincalculator.persist.repository.ICoinCurrencyRelationsRepository;
 import com.sgveteris.coincalculator.service.IPriceService;
 import com.sgveteris.coincalculator.util.KeyBuilder;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriTemplate;
@@ -20,16 +22,14 @@ import java.math.RoundingMode;
 import java.net.URI;
 
 @Service
+@RequiredArgsConstructor
 public class PriceService implements IPriceService {
 
-    @Value("${api.blockchain.uri}")
-    private String uri;
+    private final Environment env;
 
-    @Autowired
-    private ICoinCurrencyRelationsRepository coinCurrencyRelationsRepository;
+    private final ICoinCurrencyRelationsRepository coinCurrencyRelationsRepository;
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     @Override
     @Cacheable(value = "priceCache")
@@ -38,7 +38,7 @@ public class PriceService implements IPriceService {
         if (!coinCurrencyRelationsRepository.isTickerValid(currency, coinType)) {
             throw new TickerInvalidException(symbol);
         }
-        URI url = new UriTemplate(uri).expand(symbol);
+        URI url = new UriTemplate(env.getProperty("api.blockchain.uri")).expand(symbol);
         TickersDto result = restTemplate.getForObject(url, TickersDto.class);
         if (result == null) {
             throw new TickerNotFoundException(symbol);

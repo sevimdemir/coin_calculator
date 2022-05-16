@@ -16,7 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class CoinEntity {
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "coin_type", nullable = false)
