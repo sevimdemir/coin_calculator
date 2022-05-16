@@ -31,7 +31,6 @@ import java.net.URI;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
 @ExtendWith(MockitoExtension.class)
 class PriceServiceTest {
 
