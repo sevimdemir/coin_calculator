@@ -7,6 +7,7 @@ import com.sgveteris.coincalculator.exception.TickerNotFoundException;
 import com.sgveteris.coincalculator.persist.repository.ICoinCurrencyRelationsRepository;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -62,9 +63,9 @@ class PriceServiceTest {
             assertNotNull(priceResponse);
             assertEquals("BTC", priceResponse.getCoinType());
         } catch (TickerNotFoundException e) {
-            assertFalse(Boolean.TRUE);
+            fail("unexpected TickerNotFoundException");
         } catch (TickerInvalidException e) {
-            assertFalse(Boolean.TRUE);
+            fail("unexpected TickerInvalidException");
         }
     }
 
@@ -75,9 +76,9 @@ class PriceServiceTest {
         //
         try {
             CalculationResult priceResponse = priceService.getPrice("USD", new BigDecimal(100), "BTC");
-            assertFalse(Boolean.TRUE);
+            fail("unexpected method return");
         } catch (TickerNotFoundException e) {
-            assertFalse(Boolean.TRUE);
+            fail("unexpected TickerNotFoundException");
         } catch (TickerInvalidException e) {
             assertTrue(Boolean.TRUE);
         }
